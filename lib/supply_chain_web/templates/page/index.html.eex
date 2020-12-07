@@ -1,0 +1,10 @@
+<section class="phx-hero">
+
+  <p><%= gettext "%{slogan}", slogan: @payload.slogan %></p>
+  <h1><%= gettext "%{name}!", name: @payload.name %></h1>
+
+</section>
+<div>
+  <%= live_render(@conn, SupplyChainWeb.SupplyChainLive) %>
+</div>
+</section>

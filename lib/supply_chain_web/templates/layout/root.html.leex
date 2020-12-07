@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no, user-scalable=no"/>
+    <title><%= assigns[:page_title] || "Phoenix LiveView Examples" %></title>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <%= csrf_meta_tag() %>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+  </head>
+  <body>
+    <header>
+    <header>
+      <section class="container">
+        <nav role="navigation">
+          <ul>
+            <li>
+              <%= if Plug.Conn.get_session(@conn, :current_user_id) do %>
+                <%= link @conn
+                |> Plug.Conn.get_session(:current_user_id)
+                |> SupplyChain.User.get_by_userid()
+                |> Map.get(:username),
+                 to: Routes.user_path(@conn, :index)%>
+              <% else %>
+                <%= link "Sign in", to: Routes.session_path(@conn, :new) %>
+              <% end %>
+            </li>
+            <!--<%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
+            <% end %>-->
+          </ul>
+        </nav>
+        <a href="https://leeduckgo.com/" class="phx-logo">
+          <center><h1>基于区块链的供应链管理结算平台</h1></center>
+        </a>
+      </section>
+    </header>
+
+
+    <%= @inner_content %>
+  </body>
+</html>

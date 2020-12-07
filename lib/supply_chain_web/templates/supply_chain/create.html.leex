@@ -1,0 +1,29 @@
+<p><%= live_flash(@flash, :info) %></p>
+<%= f = form_for @forms, "#", [phx_change: :validate,phx_submit: :save] %>
+  <%= label f, :title %>
+  <%= text_input f, :title, value: @title%>
+
+  <%= label f, :abstract %>
+  <%= text_input f, :abstract, value: @abstract %>
+
+  <button type="button" phx-click="new_item"  value="new_item">new item</button>
+  <%= for item <- 0..@items do %>
+    <%= label f, :level_on_chain %>
+    <%= item %>
+
+    <%= label f, :role%>
+    <%= text_input f,  String.to_atom("item"  <> Integer.to_string(item) <> "_role") %>
+
+    <%= label f, :portion %>
+    <%= text_input f, String.to_atom("item"  <> Integer.to_string(item) <> "_portion") %>
+
+    <%= label f, :participater_id %>
+    <%= select f, String.to_atom("item"  <> Integer.to_string(item) <> "_participater"), @participaters%>
+    <br>
+    ------
+  <% end %>
+
+  <div>
+   <%= submit "Save", phx_disable_with: "Saving..." %>
+  </div>
+</form>

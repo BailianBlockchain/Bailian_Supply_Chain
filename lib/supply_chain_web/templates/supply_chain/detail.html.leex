@@ -1,0 +1,20 @@
+<b>Title:</b> <%= @chain.title%>
+<br>
+<b>Abstract:</b> <%= @chain.abstract%>
+<br>
+<b>Status: </b><%= @chain.status%>
+<br>
+<b>供应链链路：</b>
+<br>
+<%= for item <- @chain.item do %>
+    <b>角色：</b><%= item.role%>
+    <br>
+    <b>参与者名称：</b><%= item.participater.name%>
+    <br>
+    <b>参与者数字身份：</b><%= item.participater.did%>
+    <br>
+    <b>分成比例：</b><%= item.portion%>
+    <br>
+    ---
+    <br>
+<% end %>
