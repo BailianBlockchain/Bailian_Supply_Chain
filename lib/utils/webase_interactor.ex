@@ -19,9 +19,22 @@ defmodule WeBaseInteractor do
   @node System.get_env("webase_node")
   @handle_tx_url @node <> "/WeBASE-Front/trans/handle"
   @deploy_url @node <> "/WeBASE-Front/contract/deploy"
+  @create_account_url @node <> "/WeBASE-Front/privateKey/import"
 
   def handle_tx(user_addr, contract_addr, func_name, func_param, contract_abi) do
     handle_tx(user_addr, contract_addr, func_name, func_param, contract_abi, 1)
+  end
+
+  def create_account(priv_key, user_name) do
+    url =
+      @create_account_url
+      |> Kernel.<>("?privateKey=#{priv_key}")
+      |> Kernel.<>("&userName=#{user_name}")
+      |> URI.encode()
+    {:ok, %{
+      "address" => addr
+    }} = Http.get(url)
+    {:ok, addr}
   end
 
   def handle_tx(user_addr, contract_addr, func_name, func_param, contract_abi, group_id) do

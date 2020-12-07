@@ -1,6 +1,6 @@
 defmodule SupplyChain.Item do
   use Ecto.Schema
-  import Ecto.Changeset
+  import Ecto.{Changeset, Query}
   alias SupplyChain.{Item, Chain, Participater}
   alias SupplyChain.Repo
 
@@ -18,6 +18,12 @@ defmodule SupplyChain.Item do
 
   def preload(item) do
     Repo.preload(item, [:chain, :participater])
+  end
+
+  def get_by_participater_id(id) do
+    Item
+    |> where([i], i.participater_id == ^id)
+    |> SupplyChain.Repo.all()
   end
 
   def get_by_id(id) do

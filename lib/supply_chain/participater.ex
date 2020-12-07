@@ -1,15 +1,22 @@
 defmodule SupplyChain.Participater do
   use Ecto.Schema
   import Ecto.{Changeset, Query}
-  alias SupplyChain.{Participater, Chain, Item}
+  alias SupplyChain.{Participater, Chain, Item, User}
   alias SupplyChain.Repo
 
   schema "participater" do
     field :name, :string
     field :describe, :string
     field :did, :string
-    has_many(:item, Item)
+    belongs_to :user, User
+    has_many :item, Item
     timestamps()
+  end
+
+  def update(participater, attrs) do
+    participater
+    |> changeset(attrs)
+    |> Repo.update
   end
 
   def get_all() do
@@ -43,6 +50,6 @@ defmodule SupplyChain.Participater do
   @doc false
   def changeset(%Participater{} = participater, attrs) do
     participater
-    |> cast(attrs, [:name, :describe, :did])
+    |> cast(attrs, [:name, :describe, :did, :user_id])
   end
 end

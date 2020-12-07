@@ -26,12 +26,17 @@ defmodule SupplyChainWeb.Router do
     post "/", PageController, :index
     # user pathes
     # user new then create
-    resources "/user/registrations", UserController, only: [:create, :new]
+    resources "/user/sign-up", UserController, only: [:create, :new]
     get "/user/sign-in", SessionController, :new
     post "/user/sign-in", SessionController, :create
+
+
     get "/user", UserController, :index
+
+
     get "/credential/credential", CredentialController, :index
 
+    live "/live/sc/logined", SupplyChainLoginedLive
     live "/live/sc", SupplyChainLive
     live "/live/sc/detail", SupplyChainDetailLive
     live "/live/sc/create", SupplyChainCreaterLive

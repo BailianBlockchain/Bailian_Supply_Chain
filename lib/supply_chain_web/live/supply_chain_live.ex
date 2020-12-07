@@ -8,7 +8,7 @@ defmodule SupplyChainWeb.SupplyChainLive do
 
   def render(assigns), do: SupplyChainView.render("index.html", assigns)
 
-  def mount(params, _session, socket) do
+  def mount(_params, _session, socket) do
     {:ok, put_payload(socket)}
   end
 

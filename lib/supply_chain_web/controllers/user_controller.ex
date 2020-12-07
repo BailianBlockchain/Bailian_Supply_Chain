@@ -3,12 +3,12 @@ defmodule SupplyChainWeb.UserController do
   alias SupplyChain.User
 
   def new(conn, _params) do
-    changeset = User.change_user(%User{})
+    changeset = User.change(%User{})
     render(conn, "sign_up.html", changeset: changeset)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    case User.create_user(user_params) do
+  def create(conn, %{"user" => user_params, "participater" => participater_params}) do
+    case User.create(user_params, participater_params) do
       {:ok, _user} ->
         conn
         |> put_flash(:info, "Signed up successfully.")

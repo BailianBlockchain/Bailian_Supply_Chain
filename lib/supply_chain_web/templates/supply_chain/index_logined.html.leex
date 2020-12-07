@@ -1,0 +1,30 @@
+
+<%= button "Create Chain", to: Routes.live_path(@socket, SupplyChainWeb.SupplyChainCreaterLive), method: :get, class: "btn" %>
+
+<br>
+<b>我的公司名：</b><%= @participater.name %>
+<br>
+<b>Chain Participated:</b>
+<br>
+---
+<br>
+<%= for chain <- @chains do %>
+    <b>Title: </b><%= chain.title %>
+    <br>
+    <b>Abstract: </b><%= chain.abstract %>
+    <br>
+    <b>Status: <%= chain.status %></b>
+    <br>
+    <%= for item <- chain.item do %>
+        <b>角色：</b><%= item.role%>
+        <br>
+        <b>参与者公司名：</b><%= item.participater.name %>
+        <br>
+        <b>参与者数字身份：</b><%= item.participater.did %>
+        <br>
+        <b>分成比例：</b><%= item.portion%>
+        <br>
+        ---
+        <br>
+    <% end %>
+<% end %>

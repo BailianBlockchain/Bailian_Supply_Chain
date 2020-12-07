@@ -5,6 +5,10 @@
 
 </section>
 <div>
-  <%= live_render(@conn, SupplyChainWeb.SupplyChainLive) %>
+  <%= if Plug.Conn.get_session(@conn, :current_user_id) do %>
+   <%= live_render(@conn, SupplyChainWeb.SupplyChainLoginedLive) %>
+  <% else %>
+   <%= live_render(@conn, SupplyChainWeb.SupplyChainLive) %>
+  <% end %>
 </div>
 </section>
