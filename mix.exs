@@ -62,7 +62,9 @@ defmodule SupplyChain.MixProject do
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view", override: true},
       {:floki, ">= 0.27.0", only: :test},
       # live clock example
-      {:nimble_strftime, ">= 0.0.0"}
+      {:nimble_strftime, ">= 0.0.0"},
+      # decimal
+      {:decimal, "~> 2.0"}
     ]
   end
 

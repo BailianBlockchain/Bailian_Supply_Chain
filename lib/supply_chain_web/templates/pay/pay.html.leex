@@ -1,0 +1,35 @@
+<center>
+<p><%= live_flash(@flash, :info) %></p>
+<%= f = form_for @forms, "#", [phx_change: :validate,phx_submit: :pay] %>
+
+
+    <h1>模拟支付</h1>
+    <%= select f, :chain, @chains %>
+    <br>
+    <%= label f, :money_to_pay, class: "control-label" %>
+    <br>
+    <div style="width:10%">
+    <%= text_input f, :money %>
+    </div>
+    <%= submit "Pay", phx_disable_with: "Paying..." %>
+    <br>
+        <%= if not is_nil(@p_infos) do %>
+        <b>Pay Info </b>
+        <br>
+        <%= for p_info <- @p_infos do %>
+
+            <%= gettext "支付给 %{participater} %{money} 元，
+            交易地址：%{tx_id},
+            %{participater} 现在有余额：%{balance} 元",
+            participater: elem(p_info, 0),
+            money: elem(p_info, 1),
+            tx_id: elem(p_info, 2),
+            balance: elem(p_info, 3)
+            %>
+            <br>
+        <% end %>
+
+    <% end %>
+    <br>
+</div>
+</center>
