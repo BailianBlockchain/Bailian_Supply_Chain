@@ -6,7 +6,7 @@ defmodule SupplyChainWeb.SupplyChainDetailLive do
   alias SupplyChainWeb.SupplyChainView
   alias SupplyChainWeb.Router.Helpers, as: Routes
 
-  def render(assigns), do: SupplyChainView.render("index.html", assigns)
+  def render(assigns), do: SupplyChainView.render("detail.html", assigns)
 
   def mount(params, _session, socket) do
     {:ok, put_items(socket)}
@@ -24,7 +24,7 @@ defmodule SupplyChainWeb.SupplyChainDetailLive do
     assign(socket, items: [:item1, :item2])
   end
 
-  def handle_params(%{"chain_id" => chain_id}, _url, socket) do
+  def handle_params(%{"chain_id" => chain_id}, _session, socket) do
     chain =
       chain_id
       |> Chain.get_by_id()
@@ -35,7 +35,7 @@ defmodule SupplyChainWeb.SupplyChainDetailLive do
      |> assign(chain: chain)}
   end
 
-  def handle_params(params, _url, socket) do
+  def handle_params(params, _session, socket) do
     {:noreply, socket}
   end
 end

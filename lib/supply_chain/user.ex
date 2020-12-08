@@ -42,6 +42,7 @@ defmodule SupplyChain.User do
 
     %{priv: priv_bin} = SupplyChain.WeidCrypto.gen_keys()
     priv_hex = Base.encode16(priv_bin, case: :lower)
+    # BUG: name cannot to long.
     {:ok, addr} = WeBaseInteractor.create_account(priv_hex, participater.name)
     did = Did.addr_to_did(addr)
     {:ok, participater} = Participater.update(participater, %{did: did})

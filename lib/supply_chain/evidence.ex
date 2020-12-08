@@ -10,6 +10,7 @@ defmodule SupplyChain.Evidence do
     field :describe, :string
     field :tx_id, :string
     field :owners, {:array, :integer}
+    field :signers, {:array, :integer}
     belongs_to :contract, Contract
     timestamps()
   end
@@ -17,6 +18,12 @@ defmodule SupplyChain.Evidence do
   # +--------------+
   # | database ops |
   # +--------------+
+
+  def update(ele, attrs) do
+    ele
+    |> changeset(attrs)
+    |> Repo.update
+  end
 
   def preload(evi) do
     Repo.preload(evi, :contract)
@@ -39,6 +46,6 @@ defmodule SupplyChain.Evidence do
   @doc false
   def changeset(%Evidence{} = evi, attrs) do
     evi
-    |> cast(attrs, [:key, :value, :describe, :contract_id, :tx_id, :owners])
+    |> cast(attrs, [:key, :value, :describe, :contract_id, :tx_id, :owners, :signers])
   end
 end

@@ -1,7 +1,7 @@
 defmodule SupplyChainWeb.SupplyChainCreaterLive do
   use Phoenix.LiveView
 
-  @deployer_addr "0xc98607af58b3f28f266a6125f1d6db9113d3e95c"
+  @deployer_addr System.get_env("deployer_addr")
 
   alias SupplyChain.{Item, Chain, Participater, EvidenceHandler, Did, Contract, Evidence}
   alias SupplyChainWeb.SupplyChainView
@@ -120,6 +120,7 @@ defmodule SupplyChainWeb.SupplyChainCreaterLive do
 
     chain_preloaded = Chain.preload(chain)
     participaters = Chain.get_all_participater(chain_preloaded)
+    IO.puts inspect participaters
     addr_list =
       participaters
       |> Enum.map(fn p ->
@@ -168,8 +169,9 @@ defmodule SupplyChainWeb.SupplyChainCreaterLive do
       :noreply,
       socket
       |> put_flash(:info, "created!")
+      # |> redirect(external: "https://www.baidu.com")
       |> redirect(
-        to: Routes.live_path(socket, SupplyChainWeb.SupplyChainLive, %{chain_id: chain.id})
+        to: Routes.live_path(socket, SupplyChainWeb.SupplyChainDetailLive, %{chain_id: chain.id})
       )
     }
   end

@@ -2,11 +2,73 @@ defmodule SupplyChainWeb.SupplyChainLoginedLive do
   use Phoenix.LiveView
   use Phoenix.HTML
 
-  alias SupplyChain.{Chain, Item, User, Participater}
+  alias SupplyChain.{Evidence, Did, Chain, Item, User, Participater, EvidenceHandler}
   alias SupplyChainWeb.SupplyChainView
   alias SupplyChainWeb.Router.Helpers, as: Routes
 
+  @deployer_addr System.get_env("deployer_addr")
+
   def render(assigns), do: SupplyChainView.render("index_logined.html", assigns)
+
+  def handle_event("check_status", %{"ref" => chain_id}, socket) do
+    %{contract: %{evidence: evi}} = chain =
+      chain_id
+      |> Chain.get_by_id()
+      |> Chain.preload()
+      {:ok, [ _evi_payload, owner_list, signer_addr_list]} =
+      EvidenceHandler.get_evidence(
+        @deployer_addr,
+        evi
+      )
+
+      signer_list =
+        signer_addr_list
+      |> Enum.reject(&(&1==@deployer_addr))
+      |> Enum.map(fn signer_addr ->
+        signer_addr
+        |> Did.addr_to_did()
+        |> Participater.get_by_did()
+      end)
+
+      signer_id_list = Enum.map(signer_list,&(&1.id))
+      {:ok, evi} = Evidence.update(evi, %{signers: signer_id_list})
+      signer_name_list = Enum.map(signer_list,&(&1.name))
+
+      {:ok, chain_new} = change_status(evi, chain)
+      signer_portion = "#{Enum.count(evi.signers)} / #{Enum.count(evi.owners)}"
+
+      chains_updated =
+        socket.assigns.chains
+        |> Enum.map(fn chain->
+          update_chain(chain, chain_new)
+        end)
+
+    {
+      :noreply,
+      socket
+      |> assign(signers: signer_name_list)
+      |> assign(signer_portion: signer_portion)
+      |> assign(chains: chains_updated)
+    }
+  end
+
+  def update_chain(%{id: id}=chain, %{id: new_id} = new_chain)
+    when id==new_id
+    do
+      new_chain
+  end
+
+  def update_chain(chain, _new_chain) do
+    chain
+  end
+
+  def change_status(%{signers: signers, owners: owners}, chain) do
+    if Enum.count(signers) == Enum.count(owners) do
+      Chain.update(chain, %{status: "confirmed"})
+    else
+      {:ok, chain}
+    end
+  end
 
   def mount(_params, %{"current_user_id" => current_user_id}, socket) do
     user =
@@ -27,6 +89,9 @@ defmodule SupplyChainWeb.SupplyChainLoginedLive do
   end
 
   def put_payload(socket, chains, participater) do
-    assign(socket, chains: chains, participater: participater)
+    socket
+    |> assign(chains: chains)
+    |> assign(participater: participater)
+    |> assign(signers: nil)
   end
 end

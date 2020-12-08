@@ -10,12 +10,11 @@ defmodule SupplyChain.EvidenceHandler do
 
   def get_evidence(caller_addr, evi) do
     evi_preloaded = Evidence.preload(evi)
-
     WeBaseInteractor.handle_tx(
       caller_addr,
       evi_preloaded.contract.addr,
       @func.get_evi,
-      [],
+      [evi.key],
       @evi_abi
     )
   end

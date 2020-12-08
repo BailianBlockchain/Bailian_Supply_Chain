@@ -1,7 +1,7 @@
 defmodule SupplyChain.Chain do
   use Ecto.Schema
   import Ecto.Changeset
-  alias SupplyChain.{Chain, Item}
+  alias SupplyChain.{Chain, Item, Contract}
   alias SupplyChain.Repo
 
   schema "chain" do
@@ -9,6 +9,7 @@ defmodule SupplyChain.Chain do
     field :abstract, :string
     field :status, :string
     has_many(:item, Item)
+    has_one(:contract, Contract)
     timestamps()
   end
 
@@ -21,12 +22,19 @@ defmodule SupplyChain.Chain do
     end)
   end
 
+
   def get_all() do
     Repo.all(Chain)
   end
 
+  def update(ele, attrs) do
+    ele
+    |> changeset(attrs)
+    |> Repo.update
+  end
+
   def preload(chain) do
-    Repo.preload(chain, item: :participater)
+    Repo.preload(chain, [contract: :evidence, item: :participater])
   end
 
   def get_by_title(title) when is_nil(title) do

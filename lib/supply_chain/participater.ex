@@ -27,6 +27,10 @@ defmodule SupplyChain.Participater do
     Repo.preload(participater, [:item])
   end
 
+  def get_by_did(did) do
+    Repo.get_by(Participater, did: did)
+  end
+
   def get_by_id(id) do
     Repo.get_by(Participater, id: id)
   end

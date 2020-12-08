@@ -15,6 +15,18 @@
     <br>
     <b>Status: <%= chain.status %></b>
     <br>
+    <b>Contract Address: </b><%= chain.contract.addr %>
+    <br>
+    <b>Evidence Key: </b><%= chain.contract.evidence.key %>
+    <br>
+      <button type="button" phx-click="check_status"  phx-value-ref="<%= chain.id%>">Check Signer Status</button>
+    <br>
+    <b>Signed Signer: </b><%= if not is_nil(@signers) do %>
+        <%= gettext "%{signers} (%{signer_portion})",signers: @signers, signer_portion: @signer_portion %>
+    <% end %>
+    <br>
+    ---
+    <br>
     <%= for item <- chain.item do %>
         <b>角色：</b><%= item.role%>
         <br>
