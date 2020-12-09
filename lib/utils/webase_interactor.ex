@@ -22,7 +22,8 @@ defmodule WeBaseInteractor do
   @create_account_url @node <> "/WeBASE-Front/privateKey/import"
 
   def handle_tx(user_addr, contract_addr, func_name, func_param, contract_abi) do
-    handle_tx(user_addr, contract_addr, func_name, func_param, contract_abi, 1)
+    handle_tx(user_addr,
+     contract_addr, func_name, func_param, contract_abi, 1)
   end
 
   def create_account(priv_key, user_name) do

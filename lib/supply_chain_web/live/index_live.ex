@@ -35,4 +35,5 @@ defmodule SupplyChainWeb.IndexLive do
   def handle_event("nav", _path, socket) do
     {:noreply, socket}
   end
+
 end

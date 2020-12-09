@@ -44,6 +44,7 @@ defmodule SupplyChainWeb.Router do
     live "/live/credential", CredentialLive
 
     live "/live/pay", PayLive
+    live "/live/sign", SignLive
   end
 
   scope "/login_yet", SupplyChainWeb do

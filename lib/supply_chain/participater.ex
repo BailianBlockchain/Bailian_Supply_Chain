@@ -6,6 +6,7 @@ defmodule SupplyChain.Participater do
 
   schema "participater" do
     field :name, :string
+    field :name_on_webase, :string
     field :describe, :string
     field :did, :string
     field :balance, :integer, default: 0
@@ -55,6 +56,6 @@ defmodule SupplyChain.Participater do
   @doc false
   def changeset(%Participater{} = participater, attrs) do
     participater
-    |> cast(attrs, [:name, :describe, :did, :user_id, :balance])
+    |> cast(attrs, [:name, :describe, :did, :user_id, :balance, :name_on_webase])
   end
 end

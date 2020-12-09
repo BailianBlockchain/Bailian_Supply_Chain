@@ -31,6 +31,9 @@ defmodule SupplyChain.User do
     Repo.get_by(User, id: id)
   end
 
+  def gen_name_on_webase(name) do
+    name <> Integer.to_string(RandGen.gen_num(1))
+  end
   def create(user_params, participater_params) do
     {:ok, user} = create(user_params)
 
@@ -42,10 +45,15 @@ defmodule SupplyChain.User do
 
     %{priv: priv_bin} = SupplyChain.WeidCrypto.gen_keys()
     priv_hex = Base.encode16(priv_bin, case: :lower)
-    # BUG: name cannot to long.
-    {:ok, addr} = WeBaseInteractor.create_account(priv_hex, participater.name)
+
+    name_on_webase = gen_name_on_webase(participater.name)
+    {:ok, addr} = WeBaseInteractor.create_account(priv_hex, name_on_webase)
     did = Did.addr_to_did(addr)
-    {:ok, participater} = Participater.update(participater, %{did: did})
+    {:ok, participater} =
+      Participater.update(
+        participater,
+        %{did: did, name_on_webase: name_on_webase
+      })
     {:ok, user} = update(user, %{participater_id: participater.id})
     {:ok, preload(user)}
   end

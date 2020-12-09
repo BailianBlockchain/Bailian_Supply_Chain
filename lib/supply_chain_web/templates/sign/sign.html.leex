@@ -1,0 +1,21 @@
+<center>
+<p><%= live_flash(@flash, :info) %></p>
+<%= f = form_for @forms, "#", [phx_change: :validate,phx_submit: :pay] %>
+
+
+    <h1>签名器</h1>
+    <%= label f, :链路选择, class: "control-label" %>
+    <br>
+    <%= select f, :chain, @chains %>
+    <br>
+    <%= label f, :角色选择, class: "control-label" %>
+    <br>
+    <%= if not is_nil(@participaters) do %>
+    <div style="width:10%">
+        <%= select f, :participaters, @participaters %>
+    </div>
+    <% end %>
+    <%= submit "签名", phx_disable_with: "签名中..." %>
+    <br>
+</div>
+</center>
