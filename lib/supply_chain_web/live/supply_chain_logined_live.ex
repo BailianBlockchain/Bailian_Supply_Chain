@@ -73,7 +73,7 @@ defmodule SupplyChainWeb.SupplyChainLoginedLive do
   def mount(_params, %{"current_user_id" => current_user_id}, socket) do
     user =
       current_user_id
-      |> User.get_by_userid()
+      |> User.get_by_user_id()
       |> User.preload()
 
     chains =

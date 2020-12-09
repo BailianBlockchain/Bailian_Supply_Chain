@@ -1,1 +1,13 @@
-<%=@payload.login? %>
+<%= if @login? do %>
+    <b>user name: </b><%= @user.username %>
+    <br>
+    <b>name: </b><%= @user.participater.name %>
+    <br>
+    <b>describe: </b><%= @user.participater.describe %>
+    <br>
+    <b>balance: </b><%= @balance %>
+    <br>
+    <%= button("login_out",
+    to: Routes.page_path(@conn, :index,  %{login_out: :yes}),
+     method: :post)%>
+<% end %>

@@ -6,7 +6,23 @@ defmodule SupplyChain.EvidenceHandler do
 
   @evi_bin FileHandler.read(:bin, "contract/evidence/evidence.bin")
   @evi_abi FileHandler.read(:json, "contract/evidence/evidence.abi")
-  @func %{new_evi: "newEvidence", get_evi: "getEvidence"}
+  @func %{
+    new_evi: "newEvidence",
+    get_evi: "getEvidence",
+    add_sig: "addSignatures"
+  }
+
+
+  def add_signatures(signer_addr, evi) do
+    evi_preloaded = Evidence.preload(evi)
+    WeBaseInteractor.handle_tx(
+      signer_addr,
+      evi_preloaded.contract.addr,
+      @func.add_sig,
+      [evi.key],
+      @evi_abi
+    )
+  end
 
   def get_evidence(caller_addr, evi) do
     evi_preloaded = Evidence.preload(evi)
@@ -42,9 +58,6 @@ defmodule SupplyChain.EvidenceHandler do
       @evi_abi,
       [signer_list]
     )
-  end
-
-  def add_signatures(addr) do
   end
 
   def get_signers() do

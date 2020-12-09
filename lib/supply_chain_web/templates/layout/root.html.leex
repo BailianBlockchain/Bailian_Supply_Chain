@@ -16,10 +16,12 @@
         <nav role="navigation">
           <ul>
             <li>
+              <%= link "模拟支付", to: "/live/pay" %>
+              <%= link "极速签名", to: "/live/sign" %>
               <%= if Plug.Conn.get_session(@conn, :current_user_id) do %>
                 <%= link @conn
                 |> Plug.Conn.get_session(:current_user_id)
-                |> SupplyChain.User.get_by_userid()
+                |> SupplyChain.User.get_by_user_id()
                 |> Map.get(:username),
                  to: Routes.user_path(@conn, :index)%>
               <% else %>

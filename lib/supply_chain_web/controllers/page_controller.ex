@@ -14,7 +14,12 @@ defmodule SupplyChainWeb.PageController do
   @doc """
     get action.
   """
-  def index(conn, _params) do
+  def index(conn, %{"login_out" => "yes"}) do
+    conn
+    |> clear_session()
+    |> redirect(to: Routes.page_path(conn, :index))
+  end
+  def index(conn, params) do
     render(conn, "index.html", payload: @payload)
   end
 

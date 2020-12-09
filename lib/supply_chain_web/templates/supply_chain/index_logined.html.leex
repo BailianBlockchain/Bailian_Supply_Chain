@@ -25,9 +25,10 @@
         <%= gettext "%{signers} (%{signer_portion})",signers: @signers, signer_portion: @signer_portion %>
     <% end %>
     <br>
-    ---
-    <br>
+
     <%= for item <- chain.item do %>
+        ---
+        <br>
         <b>角色：</b><%= item.role%>
         <br>
         <b>参与者公司名：</b><%= item.participater.name %>
@@ -36,7 +37,7 @@
         <br>
         <b>分成比例：</b><%= item.portion%>
         <br>
-        ---
-        <br>
     <% end %>
+    [+++++++++++++++++++++++++++++++++]<br>
+
 <% end %>

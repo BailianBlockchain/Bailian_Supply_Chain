@@ -1,6 +1,7 @@
 defmodule SupplyChainWeb.UserController do
   use SupplyChainWeb, :controller
   alias SupplyChain.User
+  alias Decimal,as: D
 
   def new(conn, _params) do
     changeset = User.change(%User{})
@@ -19,9 +20,26 @@ defmodule SupplyChainWeb.UserController do
     end
   end
 
-  def index(conn, _) do
-    if get_session(conn, :current_user_id) do
-      render(conn, "user.html", payload: %{login?: true})
+  def index(conn, sth) do
+    user_id = get_session(conn, :current_user_id)
+    if user_id do
+      user =
+        user_id
+        |> User.get_by_user_id()
+        |> User.preload()
+      money =
+        "#{user.participater.balance}"
+        |> D.new()
+        |> D.div(D.new("100"))
+        |> D.to_float()
+      render(
+        conn,
+        "user.html",
+        %{
+        login?: true,
+        user: user,
+        balance: money
+        })
     else
       redirect(conn, to: Routes.user_path(conn, :new))
     end
