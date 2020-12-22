@@ -14,7 +14,7 @@ SupplyChain created by 柏链教育。
 
 简单来说，供应链就是一系列交易节点，它连接着产品从供应端到销售端或终端的全过程。从生产到销售，产品历经了供应链的多个环节，有了区块链技术，交易就会被永久性、去中心化地记录，这降低了时间延误、成本和人工错误。
 
-![4](images\4.png)
+![4](images/4.png)
 
 
 
@@ -34,9 +34,9 @@ SupplyChain created by 柏链教育。
 
   ......
 
-![1](images\1.png)
+![1](images/1.png)
 
-![2](images\2.png)
+![2](images/2.png)
 
 
 
@@ -55,7 +55,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 **项目架构**
 
-![3](images\3.png)
+![3](images/3.png)
 
 **Learn more**
 
