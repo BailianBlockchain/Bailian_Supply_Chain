@@ -49,7 +49,6 @@ defmodule SupplyChain.MixProject do
       {:httpoison, "~> 1.5"},
       {:poison, "~> 3.1"},
       # crypto
-      {:libsecp256k1, [github: "mbrix/libsecp256k1", manager: :rebar]},
       {:binary, "~> 0.0.5"},
       # eth
       {:ex_rlp, "~> 0.5.3"},
