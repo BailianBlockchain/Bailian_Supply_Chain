@@ -2,7 +2,7 @@
 
 SupplyChain created by 柏链教育。
 
-**DEMO:** <http://124.251.110.210:4000/>
+**DEMO:** <https://supplychain.cyberemd.com/>
 
 ## 1. 设计理念
 
