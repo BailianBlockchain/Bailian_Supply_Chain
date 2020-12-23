@@ -11,9 +11,12 @@ defmodule SupplyChainWeb.SessionController do
 
     case Comeonin.Bcrypt.check_pass(user, auth_params["password"]) do
       {:ok, user} ->
+        conn_temp =
         conn
-        |> put_session(:current_user_id, user.id)
+
+        conn_temp
         |> put_flash(:info, "Signed in successfully.")
+        |> put_session(:current_user_id, user.id)
         |> redirect(to: Routes.page_path(conn, :index))
 
       {:error, _} ->

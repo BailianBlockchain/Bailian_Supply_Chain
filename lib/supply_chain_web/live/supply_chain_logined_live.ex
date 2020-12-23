@@ -70,7 +70,9 @@ defmodule SupplyChainWeb.SupplyChainLoginedLive do
     end
   end
 
-  def mount(_params, %{"current_user_id" => current_user_id}, socket) do
+  def mount(params, %{"current_user_id" => current_user_id}, socket) do
+    IO.puts "id"
+    IO.puts inspect params
     user =
       current_user_id
       |> User.get_by_user_id()
@@ -88,7 +90,17 @@ defmodule SupplyChainWeb.SupplyChainLoginedLive do
     {:ok, put_payload(socket, chains, user.participater)}
   end
 
+  def mount(params, others, socket) do
+    IO.puts "socket here"
+    IO.puts inspect params
+    IO.puts inspect others
+    IO.puts inspect socket.assigns
+    {:ok, socket}
+  end
+
   def put_payload(socket, chains, participater) do
+    IO.puts "participater here"
+    IO.puts inspect participater
     socket
     |> assign(chains: chains)
     |> assign(participater: participater)
