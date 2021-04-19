@@ -90,6 +90,7 @@ defmodule SupplyChainWeb.SupplyChainCreaterLive do
   # | handle event |
   # +--------------+
   def handle_event("new_item", payloads, socket) do
+    IO.puts inspect "1"
     {:noreply,
      socket
      |> assign(items: socket.assigns.items + 1)}
