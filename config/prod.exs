@@ -10,9 +10,11 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :supply_chain, SupplyChainWeb.Endpoint,
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
-
+  http: [port: 4000],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  server: true,
+  root: ".",
+  version: Application.spec(:supply_chain, :vsn)
 # Do not print debug messages in production
 config :logger, level: :info
 
@@ -52,4 +54,12 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"
+# Configure your database
+config :supply_chain, SupplyChain.Repo,
+  username: "postgres",
+  password: "postgres",
+  database: "supply_chain_dev",
+  hostname: "localhost",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10

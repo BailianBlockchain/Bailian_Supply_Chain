@@ -63,7 +63,9 @@ defmodule SupplyChain.MixProject do
       # live clock example
       {:nimble_strftime, ">= 0.0.0"},
       # decimal
-      {:decimal, "~> 2.0"}
+      {:decimal, "~> 2.0"},
+      # for pack
+      {:distillery, "~> 2.0"}
     ]
   end
 
